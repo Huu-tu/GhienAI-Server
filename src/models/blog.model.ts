@@ -5,30 +5,29 @@ const BlogSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     paragraph: {
       type: String,
-      required: true,
+      required: true
     },
     content: {
       type: String,
-      required: true,
+      required: true
     },
     image: {
       type: String,
       required: false,
-      data: Buffer,
+      data: Buffer
     },
     type: {
       type: String,
-      required: true,
-    },
-    // Removed createAt and updateAt fields since timestamps: true will create createdAt and updatedAt automatically
+      required: true
+    }
   },
   {
     collection: 'blogs',
-    timestamps: true, // This will add createdAt and updatedAt fields automatically
+    timestamps: true
   }
 );
 
