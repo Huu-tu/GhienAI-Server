@@ -4,7 +4,6 @@ import Blog from '../models/blog.model'
 export const getAllBlog = async (req: Request, res: Response): Promise<void> => {
   try {
     const blogs = await Blog.find()
-
     if (blogs && blogs.length > 0) {
       res.status(200).json(blogs)
     } else {

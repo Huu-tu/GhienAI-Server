@@ -5,8 +5,8 @@ import ImgUpload from '../middlewares/fileUpload';
 const router: Router = Router()
 
 // Blogs
-router.get('/', getAllBlog)
+router.get('/get-blogs', getAllBlog)
 router.get('/:id', getSingleBlog)
-router.post('/', ImgUpload.single('image'), createBlog)
+router.post('/add-blog', ImgUpload.single('image'), createBlog)
 
 export default router
