@@ -6,7 +6,7 @@ const router: Router = Router()
 
 // Blogs
 router.get('/get-blogs', getAllBlog)
-router.get('/:id', getSingleBlog)
+router.get('/view-blog/:id', getSingleBlog)
 router.post('/add-blog', ImgUpload.single('image'), createBlog)
 
 export default router
