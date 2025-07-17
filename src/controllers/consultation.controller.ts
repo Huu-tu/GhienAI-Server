@@ -28,7 +28,7 @@ export const getAllConsultation = async (
       });
     }
   }
-};
+}
 
 export const getSingleConsultation = async (
   req: Request,
@@ -40,27 +40,27 @@ export const getSingleConsultation = async (
       .select('name email phone topic description tech createdAt');
 
     if (!data) {
-      res.status(404).json({ message: 'Consultation not found' });
+      res.status(404).json({ message: 'Consultation not found' })
       return;
     }
 
     res.status(200).json(data);
   } catch (error) {
-    next(error);
+    next(error)
   }
-};
+}
 
 export const createConsultation = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  let name = req.body.name;
-  let email = req.body.email;
-  let phone = req.body.phone;
-  let topic = req.body.topic;
-  let description = req.body.description;
-  let tech = req.body.tech;
+  let name = req.body.name
+  let email = req.body.email
+  let phone = req.body.phone
+  let topic = req.body.topic
+  let description = req.body.description
+  let tech = req.body.tech
 
   const data = await Consultation.create({
     name,
@@ -72,8 +72,8 @@ export const createConsultation = async (
   });
 
   if (data) {
-    res.status(200).json('Success');
+    res.status(200).json('Success')
   } else {
-    res.json('Failed');
+    res.json('Failed')
   }
-};
+}

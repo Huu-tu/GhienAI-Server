@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose'
+const Schema = mongoose.Schema
 
 const BlogSchema = new Schema(
   {
@@ -31,5 +31,5 @@ const BlogSchema = new Schema(
   }
 );
 
-const Blog = mongoose.model('Blog', BlogSchema);
-export default Blog;
+const Blog = mongoose.model('Blog', BlogSchema)
+export default Blog
