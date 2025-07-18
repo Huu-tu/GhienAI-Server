@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { getAllBlog,getSingleBlog, createBlog } from "../controllers/blog.controller";
-import ImgUpload from '../middlewares/fileUpload';
+import { Router } from 'express'
+import { getAllBlog, getSingleBlog, createBlog } from '~/controllers/blog.controller'
+import ImgUpload from '../middlewares/fileUpload'
 
 const router: Router = Router()
 

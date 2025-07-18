@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
-const BlogSchema = new Schema(
+const CaseStudySchema = new Schema(
   {
     title: {
       type: String,
@@ -26,10 +26,10 @@ const BlogSchema = new Schema(
     }
   },
   {
-    collection: 'blogs',
+    collection: 'case-study',
     timestamps: true
   }
 )
 
-const Blog = mongoose.model('Blog', BlogSchema)
-export default Blog
+const CaseStudy = mongoose.model('CaseStudy', CaseStudySchema)
+export default CaseStudy

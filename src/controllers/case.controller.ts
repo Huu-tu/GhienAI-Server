@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from 'express'
-import Blog from '../models/blog.model'
+import CaseStudy from '../models/case.model'
 
-export const getAllBlog = async (req: Request, res: Response): Promise<void> => {
+export const getAllCase = async (req: Request, res: Response): Promise<void> => {
   try {
-    const blogs = await Blog.find()
-    if (blogs && blogs.length > 0) {
-      res.status(200).json(blogs)
+    const cases = await CaseStudy.find()
+    if (cases && cases.length > 0) {
+      res.status(200).json(cases)
     } else {
       res.status(404).json({
-        message: 'No blogs found.'
+        message: 'No case found.'
       })
     }
   } catch (error: any) {
@@ -25,23 +25,22 @@ export const getAllBlog = async (req: Request, res: Response): Promise<void> => 
   }
 }
 
-export const getSingleBlog = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const getSingleCase = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const data = await Blog.findById(req.params.id).select('title shortDescription description image type createdAt')
+    const caseStudy = await CaseStudy.findById(req.params.id).select('title shortDescription description image type createdAt')
 
-    if (!data) {
-      res.status(404).json({ message: 'Blog not found' })
+    if (!caseStudy) {
+      res.status(404).json({ message: 'CaseStudy not found' })
       return
     }
 
-    res.status(200).json(data)
+    res.status(200).json(caseStudy)
   } catch (error) {
     next(error)
   }
 }
 
-export const createBlog = async (req: Request, res: Response): Promise<void> => {
-  console.log(req.body)
+export const createCase = async (req: Request, res: Response): Promise<void> => {
   const title = req.body.title
   const shortDescription = req.body.shortDescription
   const description = req.body.description
@@ -53,7 +52,7 @@ export const createBlog = async (req: Request, res: Response): Promise<void> => 
   }
   const image = req.file.filename
 
-  const data = await Blog.create({
+  const data = await CaseStudy.create({
     title,
     shortDescription,
     description,
