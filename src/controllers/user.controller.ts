@@ -1,37 +1,33 @@
-import { Request, Response, NextFunction } from "express";
-import bcrypt from 'bcryptjs';
+import { Request, Response, NextFunction } from 'express'
+import bcrypt from 'bcryptjs'
 // import jwt from 'jsonwebtoken';
-import User from "../models/user.model";
+import User from '../models/user.model'
 
-export const signin = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
+export const signin = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body
 
     if (!email || !password) {
-      res.status(400).json({ success: false, message: "Vui lòng nhập email và mật khẩu." });
+      res.status(400).json({ success: false, message: "Vui lòng nhập email và mật khẩu." })
       return;
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email })
 
     if (!user ) {
-      res.status(404).json({ success: false, message: "Tài khoản không tồn tại." });
+      res.status(404).json({ success: false, message: "Tài khoản không tồn tại." })
       return;
     }
 
     if (!user.password) {
-      res.status(500).json({ success: false, message: "Tài khoản không hợp lệ (thiếu mật khẩu)." });
+      res.status(500).json({ success: false, message: "Tài khoản không hợp lệ (thiếu mật khẩu)." })
       return;
     }
 
     const isMatch =  bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      res.status(401).json({ success: false, message: "Sai mật khẩu." });
+      res.status(401).json({ success: false, message: 'Sai mật khẩu.' })
       return;
     }
 

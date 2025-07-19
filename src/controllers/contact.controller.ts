@@ -1,15 +1,15 @@
-import { Request, Response, NextFunction } from 'express';
-import Consultation from '../models/consultation.model';
+import { Request, Response, NextFunction } from 'express'
+import Contact from '../models/contact.model'
 
-export const getAllConsultation = async (res: Response): Promise<void> => {
+export const getAllContact = async (res: Response): Promise<void> => {
   try {
-    const consultations = await Consultation.find()
+    const consultations = await Contact.find()
 
     if (consultations && consultations.length > 0) {
       res.status(200).json(consultations)
     } else {
       res.status(404).json({
-        message: 'No consultations found.'
+        message: 'No contact found.'
       })
     }
   } catch (error: any) {
@@ -26,12 +26,12 @@ export const getAllConsultation = async (res: Response): Promise<void> => {
   }
 }
 
-export const getSingleConsultation = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const getSingleContact = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const data = await Consultation.findById(req.params.id).select('name email phone topic description tech createdAt');
+    const data = await Contact.findById(req.params.id).select('name email phone topic description tech createdAt')
 
     if (!data) {
-      res.status(404).json({ message: 'Consultation not found' })
+      res.status(404).json({ message: 'Contact not found' })
       return
     }
 
@@ -41,21 +41,17 @@ export const getSingleConsultation = async (req: Request, res: Response, next: N
   }
 }
 
-export const createConsultation = async (req: Request, res: Response): Promise<void> => {
+export const createContact = async (req: Request, res: Response): Promise<void> => {
   const name = req.body.name
   const email = req.body.email
   const phone = req.body.phone
   const topic = req.body.topic
-  const description = req.body.description
-  const tech = req.body.tech
 
-  const data = await Consultation.create({
+  const data = await Contact.create({
     name,
     email,
     phone,
-    topic,
-    description,
-    tech
+    topic
   })
 
   if (data) {

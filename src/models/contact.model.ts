@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
-const ConsultationSchema = new Schema(
+const ContactSchema = new Schema(
   {
     name: {
       type: String,
@@ -17,22 +17,14 @@ const ConsultationSchema = new Schema(
     },
     topic: {
       type: String,
-      required: false
-    },
-    description: {
-      type: String,
       required: true
-    },
-    tech: {
-      type: String,
-      required: false
     }
   },
   {
-    collection: 'consultations',
+    collection: 'contacts',
     timestamps: true
   }
 )
 
-const Consultation = mongoose.model('Consultation', ConsultationSchema)
-export default Consultation
+const Contact = mongoose.model('Contact', ContactSchema)
+export default Contact
