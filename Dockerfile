@@ -1,45 +1,48 @@
-# Use the official Node.js 18 LTS image as base
-FROM node:18-alpine
+# Stage 1: Build Stage
+FROM node:18-alpine AS builder
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and yarn.lock (if available) to leverage Docker cache
-COPY package.json ./
-COPY yarn.lock* ./
+COPY package.json yarn.lock* ./
 
-# Install dependencies
-RUN yarn install --frozen-lockfile --production=false
+# Cài tất cả dependencies (bao gồm devDeps để build TypeScript)
+RUN yarn install --frozen-lockfile
 
-# Copy the rest of the application code
+# Copy source code
 COPY . .
 
-# Build the TypeScript application
+# Build TypeScript => dist/
 RUN yarn build
 
-# Remove development dependencies to reduce image size
-RUN yarn install --frozen-lockfile --production=true && yarn cache clean
+# Stage 2: Production Image
+FROM node:18-alpine AS production
 
-# Create a non-root user for security
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nodejs -u 1001
+WORKDIR /app
 
-# Create necessary directories and set permissions
-RUN mkdir -p /app/dist/publics/img && chown -R nodejs:nodejs /app
+# Copy only dist/, package.json, yarn.lock
+COPY --from=builder /app/dist ./dist
+COPY package.json yarn.lock* ./
 
-# Switch to non-root user
+# Install only production deps
+RUN yarn install --frozen-lockfile --production && yarn cache clean
+
+# Tạo user không phải root
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 && \
+    mkdir -p /app/dist/publics/img && \
+    chown -R nodejs:nodejs /app
+
 USER nodejs
 
-# Expose the port the app runs on
-EXPOSE 4000
-
-# Set environment variables
+# Cấu hình
 ENV NODE_ENV=production
 ENV PORT=4000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:4000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
+EXPOSE 4000
 
-# Start the application
+# Health check (nếu có route /health)
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:4000/health', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
+
+# Start app
 CMD ["yarn", "start"]
