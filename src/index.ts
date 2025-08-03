@@ -9,6 +9,7 @@ require('dotenv').config()
 const app = express()
 
 const port = process.env.PORT || 4000
+const url_server = process.env.url_server
 app.use(
   cors({
     origin: ['http://localhost:5173', 'http://localhost:3001'],
@@ -23,5 +24,5 @@ connectDB()
 setupRoutes(app)
 
 app.listen(port, () => {
-  console.log(`Server is listening at http://localhost:${port}`)
+  console.log(`Server is listening at ${url_server}${port}`)
 })
