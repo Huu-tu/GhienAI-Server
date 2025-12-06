@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { getAllCase, getSingleCase, createCase } from '~/controllers/case.controller'
-import ImgUpload from '../middlewares/fileUpload'
+import ImgUpload from '../middlewares/imageUpload'
 
 const router: Router = Router()
 

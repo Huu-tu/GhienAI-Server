@@ -11,9 +11,7 @@ export const connectDB = async () => {
   }
 
   try {
-    await mongoose.connect(URI, {
-      // Optional configs (TS có thể yêu cầu ép kiểu)
-    } as any);
+    await mongoose.connect(URI, {} as any)
     console.log('✅ MongoDB connected')
   } catch (err) {
     console.error('❌ MongoDB connection error:', err)

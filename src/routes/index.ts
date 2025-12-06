@@ -4,6 +4,7 @@ import caseRoutes from './case-study.route'
 import solutionRoutes from './solution.route'
 import consultationRoutes from './consultation.route'
 import contactRoutes from './contact.route'
+import documentRoutes from './document.route'
 import userRoutes from './user.route'
 
 const setupRoutes = (app: Application): void => {
@@ -13,6 +14,7 @@ const setupRoutes = (app: Application): void => {
   app.use('/api/solution', solutionRoutes)
   app.use('/api/consultation', consultationRoutes)
   app.use('/api/contact', contactRoutes)
+  app.use('/api/document', documentRoutes)
 }
 
 export default setupRoutes
