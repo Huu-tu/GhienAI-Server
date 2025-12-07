@@ -5,6 +5,6 @@ import { uploadFileDocument } from '~/controllers/document.controller'
 const router: Router = Router()
 
 // Documents
-router.post('/add-blog', FileUpload.single('file'), uploadFileDocument)
+router.post('/upload-document', FileUpload.single('file'), uploadFileDocument)
 
 export default router

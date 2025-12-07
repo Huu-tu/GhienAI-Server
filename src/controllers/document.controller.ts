@@ -1,6 +1,10 @@
 import { Request, Response } from 'express'
 import Document from '../models/document.model'
 
+export const getAllDocument = ()=>{
+
+}
+
 export const uploadFileDocument = async (req: Request, res: Response): Promise<void> => {
   try {
     if (!req.file) {
@@ -27,4 +31,12 @@ export const uploadFileDocument = async (req: Request, res: Response): Promise<v
     console.error(error)
     res.status(500).json({ message: 'Failed to upload document', error })
   }
+}
+
+export const downLoadDocument = ()=>{
+
+}
+
+export const deleteDocument = ()=>{
+
 }
