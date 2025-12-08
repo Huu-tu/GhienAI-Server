@@ -1,0 +1,4 @@
+Thiết kế luồng tự động tạo video voe3 đăng lên TikTok
+- Sử dung voe3 super
+- Quản lý bằng gg sheet
+- video từ 15s-35s

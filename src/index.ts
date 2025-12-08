@@ -19,6 +19,7 @@ app.use(
 app.use(express.json({ limit: '30mb' }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use('/img', express.static(path.join(__dirname, 'publics/img')))
+app.use('/file', express.static(path.join(__dirname, 'publics/file/document')))
 
 connectDB()
 setupRoutes(app)

@@ -41,7 +41,6 @@ export const getSingleBlog = async (req: Request, res: Response, next: NextFunct
 }
 
 export const createBlog = async (req: Request, res: Response): Promise<void> => {
-  console.log(req.body)
   const title = req.body.title
   const shortDescription = req.body.shortDescription
   const description = req.body.description

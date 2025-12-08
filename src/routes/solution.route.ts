@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getAllSolution,getSingleSolution, createSolution } from "../controllers/solution.controller";
-import ImgUpload from '../middlewares/fileUpload';
+import ImgUpload from '../middlewares/imageUpload';
 
 const router: Router = Router();
 
