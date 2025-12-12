@@ -24,6 +24,6 @@ app.use('/file', express.static(path.join(__dirname, 'publics/file/document')))
 connectDB()
 setupRoutes(app)
 
-app.listen(port, '0.0.0.0', () => {
+app.listen('0.0.0.0', () => {
   console.log(`Server is listening at ${url_server}${port}`)
 })
