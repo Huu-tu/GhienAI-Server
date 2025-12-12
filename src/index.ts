@@ -12,7 +12,7 @@ const port = Number(process.env.PORT) || 4000
 const url_server = process.env.url_server
 app.use(
   cors({
-    origin: ['http://103.90.227.169:3000'],
+    origin: true,
     credentials: true
   })
 )
