@@ -1,48 +1,44 @@
-# Stage 1: Build Stage
-FROM node:18-alpine AS builder
+# ==========================
+# Stage 1: Build TypeScript
+# ==========================
+FROM node:20-alpine AS builder
 
+# Set working directory
 WORKDIR /app
 
-COPY package.json yarn.lock* ./
+# Copy package.json & yarn.lock
+COPY package.json yarn.lock ./
 
-# Cài tất cả dependencies (bao gồm devDeps để build TypeScript)
+# Cài dependencies
 RUN yarn install --frozen-lockfile
 
-# Copy source code
+# Copy toàn bộ source code
 COPY . .
 
-# Build TypeScript => dist/
+# Build TypeScript
 RUN yarn build
 
-# Stage 2: Production Image
-FROM node:18-alpine AS production
+# ==========================
+# Stage 2: Run backend
+# ==========================
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy only dist/, package.json, yarn.lock
+# Copy node_modules từ builder
+COPY --from=builder /app/node_modules ./node_modules
+
+# Copy code đã build
 COPY --from=builder /app/dist ./dist
-COPY package.json yarn.lock* ./
 
-# Install only production deps
-RUN yarn install --frozen-lockfile --production && yarn cache clean
+# Copy các file cần thiết khác (package.json, .env.example,... nếu muốn)
+COPY --from=builder /app/package.json ./package.json
 
-# Tạo user không phải root
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001 && \
-    mkdir -p /app/dist/publics/img && \
-    chown -R nodejs:nodejs /app
+# Set env file (nếu bạn muốn map .env từ host thì dùng volume)
+# ENV NODE_ENV=production
 
-USER nodejs
+# Expose port backend
+EXPOSE 3001
 
-# Cấu hình
-ENV NODE_ENV=production
-ENV PORT=4000
-
-EXPOSE 4000
-
-# Health check (nếu có route /health)
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:4000/health', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
-
-# Start app
-CMD ["yarn", "start"]
+# Command chạy backend
+CMD ["yarn", "dev"]
