@@ -25,7 +25,4 @@ jobs:
             docker stop backend-container || true
             docker rm backend-container || true
             
-            docker run -d \
-              -p 3001:3001 \
-              --name backend-container \
-              backend-prod
+            docker run -d -p 3001:3001 --name backend-container --env-file .env backend-prod
