@@ -13,7 +13,7 @@ const url_server = process.env.url_server
 app.use(
   cors({
     origin: 'http://103.90.227.169:3000',
-    credentials: true
+    credentials: false
   })
 )
 app.use(express.json({ limit: '30mb' }))
