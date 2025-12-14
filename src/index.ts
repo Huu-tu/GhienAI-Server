@@ -11,7 +11,6 @@ const app = express()
 const port = Number(process.env.PORT) || 4000
 const url_server = process.env.url_server
 app.use(cors())
-app.options('*', cors())
 app.use(express.json({ limit: '30mb' }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use('/img', express.static(path.join(__dirname, 'publics/img')))
