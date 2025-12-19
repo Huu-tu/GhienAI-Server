@@ -22,7 +22,7 @@ jobs:
       - name: Build & push ghienAI-Server
         uses: docker/build-push-action@v5
         with:
-          context: ./GhienAI-Server
+          context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/ghienai-api:latest
 
