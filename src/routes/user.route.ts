@@ -9,5 +9,5 @@ router.post('/signin', signin)
 router.post('/signup', signup)
 
 // Upload image
-router.post('/upload-image', ImgUpload.single('image'), UploadImageSingle)
+router.post('/upload-image', ImgUpload.single('file'), UploadImageSingle)
 export default router
