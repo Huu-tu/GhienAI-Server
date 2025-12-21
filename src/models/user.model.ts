@@ -1,44 +1,42 @@
-import mongoose from 'mongoose';
-import Blog from "~/models/blog.model";
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose'
+const Schema = mongoose.Schema
 
 const UserSchema = new Schema(
   {
     name: {
       type: String,
-      required: false,
+      required: false
     },
     email: {
       type: String,
-      required: false,
+      required: false
     },
     password: {
       type: String,
-      required: false,
+      required: false
     },
     phone: {
       type: Number,
-      required: false,
+      required: false
     },
     role: {
       type: String,
-      required: false,
+      required: false
     },
     createAt: {
       type: Date,
-      default: Date.now,
+      default: Date.now
     },
     updateAt: {
       type: Date,
-      default: Date.now,
-    },
+      default: Date.now
+    }
   },
   {
     collection: 'users',
-    timestamp: true,
-  },
-);
+    timestamp: true
+  }
+)
 
-
-const User =  mongoose.model('User', UserSchema);
-export default User;
+const User = mongoose.model('User', UserSchema)
+export default User
