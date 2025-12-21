@@ -13,13 +13,13 @@ const url_server = process.env.url_server
 app.use(cors())
 app.use(express.json({ limit: '30mb' }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
-// app.use('/img', express.static(path.join(__dirname, 'publics/img')))
-app.use('/img', express.static(path.join(__dirname, '../src/publics/img')))
-app.use('/file', express.static(path.join(__dirname, 'publics/file/document')))
+
+app.use('/img', express.static(path.resolve(process.cwd(), 'public/img')))
+app.use('/file', express.static(path.resolve(process.cwd(), 'public/file/document')))
 
 connectDB()
 setupRoutes(app)
 
 app.listen(port, '0.0.0.0', () => {
-  console.log(`Server is listening at ${url_server}`) // log không in port
+  console.log(`Server is listening at ${url_server}`)
 })
