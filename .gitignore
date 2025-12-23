@@ -1,5 +1,7 @@
 package-lock.json
 node_modules/
 dist/
+public/file
+public/img
 .env
 .idea/
