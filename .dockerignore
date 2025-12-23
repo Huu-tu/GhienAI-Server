@@ -9,6 +9,8 @@ yarn-error.log*
 dist
 build
 *.tsbuildinfo
+public/file
+public/img
 
 # Env files
 .env
