@@ -31,5 +31,20 @@ const BlogSchema = new Schema(
   }
 )
 
+BlogSchema.index(
+  {
+    title: 'text',
+    shortDescription: 'text',
+    description: 'text'
+  },
+  {
+    weights: {
+      title: 5,
+      shortDescription: 3,
+      description: 1
+    }
+  }
+)
+
 const Blog = mongoose.model('Blog', BlogSchema)
 export default Blog

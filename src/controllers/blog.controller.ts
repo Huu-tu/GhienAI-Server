@@ -3,25 +3,44 @@ import Blog from '../models/blog.model'
 
 export const getAllBlog = async (req: Request, res: Response): Promise<void> => {
   try {
-    const blogs = await Blog.find()
-    if (blogs && blogs.length > 0) {
-      res.status(200).json(blogs)
-    } else {
-      res.status(404).json({
-        message: 'No blogs found.'
-      })
-    }
+    const page = Math.max(Number(req.query.page) || 1, 1)
+    const limit = Math.max(Number(req.query.limit) || 10, 1)
+    const skip = (page - 1) * limit
+    const q = (req.query.q as string)?.trim()
+
+    const filter = q
+      ? {
+          $or: [
+            { title: { $regex: q, $options: 'i' } },
+            { shortDescription: { $regex: q, $options: 'i' } },
+            { description: { $regex: q, $options: 'i' } }
+          ]
+        }
+      : {}
+
+    const [blogs, total] = await Promise.all([
+      Blog.find(filter)
+        .select('title shortDescription description image type createdAt')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      Blog.countDocuments(filter)
+    ])
+
+    res.status(200).json({
+      data: blogs,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit)
+      }
+    })
   } catch (error: any) {
-    if (error.isJoi === true) {
-      res.status(400).json({
-        message: 'Invalid details provided.'
-      })
-    } else {
-      res.status(500).json({
-        message: 'An error occurred while fetching blogs.',
-        error: error.message
-      })
-    }
+    res.status(500).json({
+      message: 'An error occurred while fetching blogs.',
+      error: error.message
+    })
   }
 }
 
